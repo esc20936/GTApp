@@ -6,7 +6,7 @@ import { NavigationContainer , StackActions, NavigationActions } from '@react-na
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { InitialView } from './src/Components/Views/InitialView';
 import { Home } from './src/Components/Views/Home/Home';
-import { Camera } from './src/Components/Views/Camera/Camera';
+import { CameraClass } from './src/Components/Views/Camera/CameraClass';
 const Stack = createNativeStackNavigator();
 
 export default function App() {
@@ -14,9 +14,9 @@ export default function App() {
     <Provider store={store}>
       <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="InitalView" component={InitialView}  options={{ headerShown: false}} />
+        <Stack.Screen name="Login" component={InitialView}  options={{ headerShown: false}} />
         <Stack.Screen name="Home" component={Home} options={{ headerShown: false}} />
-        <Stack.Screen name="Camera" component={Camera} options={{ headerShown: false}} />
+        <Stack.Screen name="Camera" component={CameraClass} options={{ headerShown: false}} />
       </Stack.Navigator>
       </NavigationContainer>
     </Provider>
