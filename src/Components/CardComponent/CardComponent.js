@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useEffect} from "react";
 import {
   StyleSheet,
   Text,
@@ -8,16 +8,24 @@ import {
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import Svg, { Path } from "react-native-svg";
+import { useSelector } from "react-redux";
+import { formatCurrency } from "../../Utilities/FormatCurrency";
 
 const fondo = require("../../assets/fondoCard1.png");
 
+
 export const CardComponent = () => {
+
+  const {balance,email} = useSelector(state => state.user);
+
+  
+
   return (
     <TouchableOpacity activeOpacity={0.7} style={styles.formContainer}>
       <ImageBackground
         source={fondo}
         resizeMode="cover"
-        style={{ height: 190, width: 250,borderRadius: 15, }}
+        style={{ height: 190, width: 280,borderRadius: 15, }}
       >
         <LinearGradient
           // Button Linear Gradient
@@ -50,8 +58,8 @@ export const CardComponent = () => {
                 </Svg>
             </View>
             <View style={styles.accountDetails}>
-                <Text style={styles.subTextCard}>Account Details</Text>
-                <Text style={styles.mainTextCard}>Q27,000</Text>
+                <Text style={styles.subTextCard}>{email}</Text>
+                <Text style={styles.mainTextCard}>{ formatCurrency(balance) }</Text>
             </View>
             <View style={styles.cardInfoContainer}>
                 <Text style={styles.subTextCard}>•••••5452</Text>
@@ -67,7 +75,7 @@ export const CardComponent = () => {
 const styles = StyleSheet.create({
   formContainer: {
     height: 190,
-    width: 250,
+    width: 280,
     backgroundColor: "#143590",
     borderRadius: 15,
     bottom: 20,
@@ -120,7 +128,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "bold",
     // alignSelf: "center",
-    marginLeft: 10,
+    // marginLeft: 10,
     marginTop: 10,
  },
  cardInfoContainer:{

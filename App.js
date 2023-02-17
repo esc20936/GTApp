@@ -7,10 +7,13 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { InitialView } from './src/Components/Views/InitialView';
 import { Home } from './src/Components/Views/Home/Home';
 import { CameraClass } from './src/Components/Views/Camera/CameraClass';
-const Stack = createNativeStackNavigator();
+import { QueryClientProvider,QueryClient } from '@tanstack/react-query';
 
+const Stack = createNativeStackNavigator();
+const queryClient = new QueryClient();
 export default function App() {
   return (
+    <QueryClientProvider client={queryClient}>
     <Provider store={store}>
       <NavigationContainer>
       <Stack.Navigator>
@@ -20,6 +23,7 @@ export default function App() {
       </Stack.Navigator>
       </NavigationContainer>
     </Provider>
+    </QueryClientProvider>
   );
 }
 

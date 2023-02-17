@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useState} from "react";
 import {
   View,
   Text,
@@ -7,14 +7,58 @@ import {
   TextInput,
   KeyboardAvoidingView,
   ImageBackground,
+  Alert
 } from "react-native";
 import Svg, { Path } from "react-native-svg";
+import { login } from "../../hooks/login";
+import { cyrb53 } from "../../Utilities/Hash";
+import { useQuery } from "@tanstack/react-query";
+import { useDispatch } from "react-redux";
+import { setUserData } from "../../Store/User/UserSlce";
+
 
 export const InitialView = ({ navigation }) => {
 
-  const handleLogin = () => {
+  const dispatch = useDispatch();
 
-    navigation.navigate("Home");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  
+
+  const errorAlert = () =>
+    Alert.alert('Error', 'Error al iniciar sesión', [
+      {text: 'OK', onPress: () => {}},
+    ]);
+
+  const handleEmailTextChange = (text) => {
+    setEmail(text);
+  }
+  const handlePasswordTextChange = (text) => {
+    setPassword(text);
+  }
+
+  const handleLogin = async () => {
+    let hashedPassword = `${cyrb53(password)}`;
+    
+    const startLogin = async () => {
+      const data = await login(email, hashedPassword);
+      let statusCode = data.statusCode;
+      if (statusCode === 200) {
+        setEmail("");
+        setPassword("");
+        let userData = data.data[0];
+        dispatch(setUserData(userData));
+        navigation.navigate("Home");
+
+      } else {
+        errorAlert();
+      }
+
+    }
+
+    startLogin();
+
+    
 
   }
 
@@ -65,12 +109,16 @@ export const InitialView = ({ navigation }) => {
           style={styles.inputStyle}
           placeholder="Email"
           placeholderTextColor={"white"}
+          value={email}
+          onChangeText={handleEmailTextChange}
         />
         <TextInput
           style={styles.inputStyle}
           placeholder="Password"
           secureTextEntry={true}
           placeholderTextColor={"white"}
+          value={password}
+          onChangeText={handlePasswordTextChange}
         />
         <TouchableOpacity
           style={{

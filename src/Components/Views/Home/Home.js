@@ -47,10 +47,9 @@ export const Home = () => {
         </TouchableOpacity>
       </View>
       <View style={styles.cardsContainers}>
-        <ScrollView horizontal={true} >
+        {/* <ScrollView horizontal={true} > */}
             <CardComponent />
-            <CardComponent />
-        </ScrollView>
+        {/* </ScrollView> */}
       </View>
       <View style={styles.featuresContainers}>
         <Text style={styles.featureTitle} >Features</Text>
@@ -103,7 +102,7 @@ const styles = StyleSheet.create({
     // backgroundColor: "red",
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "space-around",
+    justifyContent: "center",
     padding: 10,
     alignSelf: "flex-end",
   },
