@@ -20,5 +20,5 @@ export function formatCurrency(num)
         num = num.substring(0, num.length - (4 * i + 3)) + ',' + num.substring(num.length - (4 * i + 3));
     }
 
-    return (((sign) ? '' : '-') + '$' + num + '.' + cents);
+    return (((sign) ? '' : '-') + 'Q' + num + '.' + cents);
 }

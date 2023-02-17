@@ -9,8 +9,13 @@ export const TransactionComponent = () => {
    
 return (
     <TouchableOpacity activeOpacity={0.5} style={styles.formContainer}>
-        <View style={styles.iconSection}>
-
+        <View style={styles.AccountSection}>
+            <Text style={styles.AccountSectionText}>Cobro</Text>
+            <Text style={styles.AccountSectionText2}>Manuela arevalo</Text>
+        </View>
+        <View style={styles.DetailsSection}>
+            <Text style={styles.AccountSectionText}>$ 1,000.00</Text>
+            <Text style={styles.DetailsSectionText2}>Hace 2 horas</Text>
         </View>
     </TouchableOpacity>
     );
@@ -21,9 +26,10 @@ const styles = StyleSheet.create({
     height: "80%",
     width: "95%",
     borderRadius: 15,
+    padding: 10,
     flexDirection:"row",
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
     backgroundColor: "#fff",
     shadowColor: "#000",
     shadowOffset: {
@@ -34,6 +40,43 @@ const styles = StyleSheet.create({
     shadowRadius: 3.84,
     elevation: 2,
 },
+AccountSection:{
+    height: "100%",
+    width: "70%",
+    flex: 1,
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "flex-start",
+    // backgroundColor: "red",
+},
+AccountSectionText:{
+    fontSize: 15,
+    fontWeight: "bold",
+    color: "#000",
+},
+AccountSectionText2:{
+    fontSize: 15,
+    marginTop: 5,
+    // fontWeight: "bold",
+    color: "#808080",
+},
+DetailsSection:{
+    height: "100%",
+    width: "30%",
+    flex: 1,
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "flex-end",
+    // backgroundColor: "red",
+},
+DetailsSectionText2:{
+    fontSize: 15,
+    // fontWeight: "bold",
+    color: "#808080",
+    marginTop: 5,
+
+},
+
 
 
 });

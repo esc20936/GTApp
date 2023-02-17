@@ -8,22 +8,23 @@ import { TextureLoader } from 'three';
 import { Asset } from 'expo-asset';
 import { Camera, CameraType } from 'expo-camera';
 import { useState } from 'react';
+import { useNavigation } from "@react-navigation/native";
+
 
 const loader = new THREE.TextureLoader();
 export const CameraClass= () =>{
+  const navigation = useNavigation();
   const [type, setType] = useState(CameraType.back);
   const [permission, requestPermission] = Camera.useCameraPermissions();
   
   if (!permission) {
-    // Camera permissions are still loading
     return <View />;
   }
 
   if (!permission.granted) {
-    // Camera permissions are not granted yet
     return (
       <View style={styles.container}>
-        <Text style={{ textAlign: 'center' }}>We need your permission to show the camera</Text>
+        <Text style={{ textAlign: 'center' }}>Necesitamos acceder a la camara</Text>
         <Button onPress={requestPermission} title="grant permission" />
       </View>
     );
@@ -33,6 +34,9 @@ export const CameraClass= () =>{
     setType(current => (current === CameraType.back ? CameraType.front : CameraType.back));
   }
 
+  const handleOnPress = () => {
+    navigation.navigate("Transaction");
+  }
 
   const _onGLContextCreate = async (gl) => {
     const scene = new THREE.Scene();
@@ -75,20 +79,15 @@ export const CameraClass= () =>{
           <View style={styles.container} onPress={toggleCameraType}>
              <View style={styles.container}>
               <Camera style={styles.camera} type={type}>
-                <View style={styles.buttonContainer}>
-                  <TouchableOpacity style={styles.button} onPress={toggleCameraType}>
-                  </TouchableOpacity>
-                </View>
+                
               </Camera>
             </View>
           
           <GLView
             style={{ flex: 1, position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }}
             onContextCreate={_onGLContextCreate}
-            onPress={toggleCameraType}
           />
-          <TouchableOpacity style={styles.button}>
-            <Text style={styles.text}> Pay </Text>
+          <TouchableOpacity style={styles.containerA} onPress={handleOnPress} >
           </TouchableOpacity>
 
           </View>
@@ -103,6 +102,16 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
+  },
+  containerA: {
+    flex: 1,
+    justifyContent: 'center',
+    backgroundColor: 'transparent',
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
   },
   camera: {
     flex: 1,

@@ -25,7 +25,7 @@ export const CardComponent = () => {
       <ImageBackground
         source={fondo}
         resizeMode="cover"
-        style={{ height: 190, width: 280,borderRadius: 15, }}
+        style={{ height: 190, width: 300,borderRadius: 15, }}
       >
         <LinearGradient
           // Button Linear Gradient
@@ -75,7 +75,7 @@ export const CardComponent = () => {
 const styles = StyleSheet.create({
   formContainer: {
     height: 190,
-    width: 280,
+    width: 300,
     backgroundColor: "#143590",
     borderRadius: 15,
     bottom: 20,

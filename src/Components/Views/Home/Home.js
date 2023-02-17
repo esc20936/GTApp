@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useState} from "react";
 import {
   View,
   SafeAreaView,
@@ -20,17 +20,23 @@ import { FeatureComponent } from "../../FeatureComponent/FeatureComponent";
 import { TransactionComponent } from "../../TransactionComponent/TransactionComponent";
 
 
+
 export const Home = () => {
   const navigation = useNavigation();
+  const {email} = useSelector((state) => state.user);
+
+  // capitalize first letter
+  const capitalizeFirstLetter = (string) => {
+    return string.charAt(0).toUpperCase();
+  }
+
+
   return (
     <SafeAreaView style={styles.mainContainer}>
       <StatusBar hidden />
       <View style={styles.headerHome}>
         <View style={styles.profilePicture}>
-          <Image
-            source={require("../../../assets/profilePicture.png")}
-            style={{ width: 40, height: 40, borderRadius: 50 }}
-          />
+          <Text style={{ fontSize: 20, fontWeight: "bold", color:"white" }}>{capitalizeFirstLetter(email)}</Text>
         </View>
         <Text style={{ fontSize: 20, fontWeight: "bold" }}>Inicio</Text>
         <TouchableOpacity onPress={
@@ -47,9 +53,10 @@ export const Home = () => {
         </TouchableOpacity>
       </View>
       <View style={styles.cardsContainers}>
-        {/* <ScrollView horizontal={true} > */}
+        <ScrollView horizontal={true} >
             <CardComponent />
-        {/* </ScrollView> */}
+            <CardComponent />
+        </ScrollView>
       </View>
       <View style={styles.featuresContainers}>
         <Text style={styles.featureTitle} >Features</Text>
@@ -85,16 +92,20 @@ const styles = StyleSheet.create({
     // backgroundColor: "red",
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "space-around",
-    padding: 10,
+    justifyContent: "space-between",
+    paddingVertical: 10,
+    paddingHorizontal: 20,
     alignSelf: "flex-end",
   },
   profilePicture: {
     width: 40,
     height: 40,
     borderRadius: 50,
-    backgroundColor: "white",
+    backgroundColor: "#1c1c1c",
     overflow: "hidden",
+    alignItems: "center",
+    justifyContent: "center",
+
   },
   cardsContainers: {
     flex: 0.35,
@@ -108,7 +119,7 @@ const styles = StyleSheet.create({
   },
 
   featuresContainers: {
-    flex: 0.25,
+    flex: 0.3,
     width: "100%",
     padding: 10,
     // backgroundColor: "red",
@@ -126,7 +137,7 @@ const styles = StyleSheet.create({
         justifyContent: "space-around",
     },
     transactionsContainer: {
-        flex: 0.3,
+        flex: 0.2,
         width: "100%",
         padding: 10,
         // backgroundColor: "blue",

@@ -21,14 +21,22 @@ export const FeatureComponent = (props) => {
     iconD = iconOptions[props.option];
 
     const handlePress = () => {
+      if(props.option === "camera"){
         navigation.navigate("Camera");
+      }
     }
 
     return (
         <TouchableOpacity activeOpacity={0.5} style={styles.formContainer} onPress={handlePress}>
+             <ImageBackground
+        source={fondo}
+        resizeMode="cover"
+        style={styles.ImageBackground}
+      >
             <Svg width="25%" height="25%" viewBox="0 0 512 512">
-                <Path fill="#e60000" d={iconD} />
+                <Path fill="#fff" d={iconD} />
             </Svg>
+            </ImageBackground>
             <Text style={{ color: "#000", fontSize: 15, fontWeight: "bold", marginTop:12 }}>{props.option}</Text>
         </TouchableOpacity>
       );
@@ -44,6 +52,13 @@ export const FeatureComponent = (props) => {
         // overflow: "hidden",
         
       },
+      ImageBackground:{
+        height: "100%", width: "100%",borderRadius: 15, 
+        overflow: "hidden",
+        flexDirection:"column",
+        justifyContent: "center",
+        alignItems: "center",
+      }
     
     
     });

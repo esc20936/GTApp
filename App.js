@@ -7,6 +7,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { InitialView } from './src/Components/Views/InitialView';
 import { Home } from './src/Components/Views/Home/Home';
 import { CameraClass } from './src/Components/Views/Camera/CameraClass';
+import { Transaction } from './src/Components/Views/Transaction/Transaction';
 import { QueryClientProvider,QueryClient } from '@tanstack/react-query';
 
 const Stack = createNativeStackNavigator();
@@ -20,6 +21,7 @@ export default function App() {
         <Stack.Screen name="Login" component={InitialView}  options={{ headerShown: false}} />
         <Stack.Screen name="Home" component={Home} options={{ headerShown: false}} />
         <Stack.Screen name="Camera" component={CameraClass} options={{ headerShown: false}} />
+        <Stack.Screen name="Transaction" component={Transaction} options={{ headerShown: false}} />
       </Stack.Navigator>
       </NavigationContainer>
     </Provider>

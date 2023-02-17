@@ -17,6 +17,7 @@ import { useDispatch } from "react-redux";
 import { setUserData } from "../../Store/User/UserSlce";
 
 
+
 export const InitialView = ({ navigation }) => {
 
   const dispatch = useDispatch();
