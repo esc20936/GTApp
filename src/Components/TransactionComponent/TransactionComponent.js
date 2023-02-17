@@ -2,20 +2,28 @@ import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity, TextInput, KeyboardAvoidingView, ImageBackground, } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import Svg, { Path } from "react-native-svg";
+import { useSelector } from "react-redux";
+import { formatCurrency } from "../../Utilities/FormatCurrency";
 
 const fondo = require("../../assets/fondoCard1.png");
 export const TransactionComponent = () => {
-
+    const lastTransaction = useSelector((state) => state.lastTransaction);
    
 return (
     <TouchableOpacity activeOpacity={0.5} style={styles.formContainer}>
         <View style={styles.AccountSection}>
-            <Text style={styles.AccountSectionText}>Cobro</Text>
-            <Text style={styles.AccountSectionText2}>Manuela arevalo</Text>
+            <Text style={styles.AccountSectionText}>{lastTransaction.tipo}</Text>
+            <Text style={styles.AccountSectionText2}>
+                {
+                   `Se ha realizado ...`
+                }
+            </Text>
         </View>
         <View style={styles.DetailsSection}>
-            <Text style={styles.AccountSectionText}>$ 1,000.00</Text>
-            <Text style={styles.DetailsSectionText2}>Hace 2 horas</Text>
+            <Text style={styles.AccountSectionText}>{formatCurrency(lastTransaction.monto)}</Text>
+            <Text style={styles.DetailsSectionText2}>{
+            new Date(lastTransaction.fecha).toLocaleDateString("es-ES")
+            }</Text>
         </View>
     </TouchableOpacity>
     );

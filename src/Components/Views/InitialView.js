@@ -11,10 +11,12 @@ import {
 } from "react-native";
 import Svg, { Path } from "react-native-svg";
 import { login } from "../../hooks/login";
+import { getLasTransaction } from "../../Utilities/cuentas";
 import { cyrb53 } from "../../Utilities/Hash";
 import { useQuery } from "@tanstack/react-query";
 import { useDispatch } from "react-redux";
 import { setUserData } from "../../Store/User/UserSlce";
+import { setLastTransaction } from "../../Store/LastTransaction/LastTransaction";
 
 
 
@@ -49,7 +51,13 @@ export const InitialView = ({ navigation }) => {
         setPassword("");
         let userData = data.data[0];
         dispatch(setUserData(userData));
-        navigation.navigate("Home");
+
+        let lastTransaction = await getLasTransaction(userData.id);
+        if(lastTransaction.statusCode === 200){
+          dispatch(setLastTransaction(lastTransaction.data[0]));
+          navigation.navigate("Home");
+        }
+
 
       } else {
         errorAlert();

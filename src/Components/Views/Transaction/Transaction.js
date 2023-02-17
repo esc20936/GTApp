@@ -14,8 +14,10 @@ import { useDispatch } from "react-redux";
 import { formatCurrency } from "../../../Utilities/FormatCurrency";
 import { useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
-// import { setBalance, insertTransaction, getUserData } from "../../../Utilities/cuentas";
+import { setBalanceA, insertTransaction, getUserData } from "../../../Utilities/cuentas";
 import { setBalance } from "../../../Store/User/UserSlce";
+
+import { setLastTransaction } from "../../../Store/LastTransaction/LastTransaction";
 
 
 export const Transaction = () => {
@@ -27,17 +29,52 @@ export const Transaction = () => {
      const user = useSelector((state) => state.user);
 
     const handlePayment = () => {
-        let date = new Date().toLocaleString();
+      let mainDate = new Date();
+
+        let date = mainDate.toUTCString();
         let emisorId = user.id;
         let receptorId = emisorId==="69dcfc0a-d075-45c7-a779-3cc37f4beb9f" ? "f4b14e02-cc5b-4a98-ac30-4ebb9c50fca3" : "69dcfc0a-d075-45c7-a779-3cc37f4beb9f";
         let monto = amount;
+        let result =parseFloat(user.balance)- parseFloat(monto);
+        
+        const operation = async () => {
+          const res = await setBalanceA(emisorId, result);
+          if(res.statusCode==200){
+            dispatch(setBalance(result));
+            const res2 = await insertTransaction(emisorId, monto,'Debito',date);
+            if(res2.statusCode==200){
 
-        let res =parseFloat(user.balance)- parseFloat(monto);
+              const res3 = await getUserData(receptorId);
+              if(res3.statusCode==200){
+                console.log(res3.data[0].balance);
+                let newBalance = parseFloat(res3.data[0].balance)+parseFloat(monto);
+                const res4 = await setBalanceA(receptorId, newBalance);
+                if(res4.statusCode==200){
+                  const res5 = await insertTransaction(receptorId, monto,'Credito',date);
+                  if(res5.statusCode==200){
+                    let lastTransaction = {
+                      tipo: "Debito",
+                      monto: monto,
+                      fecha: mainDate.toLocaleDateString(),
 
-        dispatch(setBalance(res));
+                    }
+                    dispatch(setLastTransaction(lastTransaction));
+
+                    navigation.pop(2);
+                  }
+
+                }
+              }
+            }
+          }
+
+        }
+
+        operation();
+        
 
       //  go back 2 screens
-        navigation.goBack(2);
+        
 
 
         

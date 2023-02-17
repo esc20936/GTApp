@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React,{useState, useEffect} from "react";
 import {
   View,
   SafeAreaView,
@@ -18,17 +18,32 @@ import Svg, { Path } from "react-native-svg";
 import { CardComponent } from "../../CardComponent/CardComponent";
 import { FeatureComponent } from "../../FeatureComponent/FeatureComponent";
 import { TransactionComponent } from "../../TransactionComponent/TransactionComponent";
-
+import { getUserData } from "../../../Utilities/cuentas";
+import { setUserData } from "../../../Store/User/UserSlce";
 
 
 export const Home = () => {
   const navigation = useNavigation();
-  const {email} = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+  const userData = useSelector((state) => state.user);
 
   // capitalize first letter
   const capitalizeFirstLetter = (string) => {
     return string.charAt(0).toUpperCase();
   }
+
+  useEffect(() => {
+    const getData = async () => {
+      const res = await getUserData(userData.id);
+      if(res.statusCode === 200){
+        dispatch(setUserData(res.data[0]));
+      }
+      
+
+    }
+
+    getData();
+  },[])
 
 
   return (
@@ -36,7 +51,7 @@ export const Home = () => {
       <StatusBar hidden />
       <View style={styles.headerHome}>
         <View style={styles.profilePicture}>
-          <Text style={{ fontSize: 20, fontWeight: "bold", color:"white" }}>{capitalizeFirstLetter(email)}</Text>
+          <Text style={{ fontSize: 20, fontWeight: "bold", color:"white" }}>{capitalizeFirstLetter(userData.email)}</Text>
         </View>
         <Text style={{ fontSize: 20, fontWeight: "bold" }}>Inicio</Text>
         <TouchableOpacity onPress={
